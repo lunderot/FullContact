@@ -6,15 +6,6 @@ using RestSharp;
 
 namespace FullContactApi
 {
-    public class FullContactPerson
-    {
-        public string name;
-        public FullContactPerson(string name)
-        {
-            this.name = name;
-        }
-    }
-
     interface IFullContactApi
     {
         Task<FullContactPerson> LookupPersonByEmailAsync(string email);
@@ -38,10 +29,8 @@ namespace FullContactApi
             var request = new RestRequest(PERSON_API_URL);
             request.AddParameter("email", email);
             request.AddHeader("X-FullContact-APIKey", API_KEY);
-
-            var response = await client.ExecuteTaskAsync(request);
-
-            return new FullContactPerson(response.Content);
+            var requestData = await client.ExecuteTaskAsync<FullContactPerson>(request);
+            return requestData.Data;
         }
     }
 }

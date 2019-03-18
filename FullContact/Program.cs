@@ -12,7 +12,9 @@ namespace FullContact
         {
             API fc = new API(Environment.GetEnvironmentVariable("API_KEY"));
             FullContactPerson person = await fc.LookupPersonByEmailAsync("bill.gates@microsoft.com");
-            Console.WriteLine(person.name);
+
+            Console.WriteLine(person.contactInfo.fullName);
+            Console.WriteLine(person.likelihood);
             return 0;
         }
 
