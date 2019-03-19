@@ -29,8 +29,13 @@ namespace FullContactApi
             var request = new RestRequest(PERSON_API_URL);
             request.AddParameter("email", email);
             request.AddHeader("X-FullContact-APIKey", API_KEY);
-            var requestData = await client.ExecuteTaskAsync<FullContactPerson>(request);
-            return requestData.Data;
+            IRestResponse<FullContactPerson> requestData = await client.ExecuteTaskAsync<FullContactPerson>(request);
+            FullContactPerson returnData = null;
+            if (requestData.IsSuccessful)
+            {
+                returnData = requestData.Data;
+            }
+            return returnData;
         }
     }
 }
